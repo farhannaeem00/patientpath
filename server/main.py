@@ -21,6 +21,7 @@ app.add_middleware(
         "http://localhost:5173",
         "http://localhost:3000",
         os.getenv("CLIENT_URL", "*"),
+        "https://patientpathclient.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
