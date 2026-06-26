@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const BASE_URL = import.meta.env.VITE_API_URL ||
-                 'https://patientpath-server.vercel.app/api';
+                 'https://patientpath-backend-git-main-farhannaeem00s-projects.vercel.app/api';
 
 const api = axios.create({
   baseURL: BASE_URL,
