@@ -1,11 +1,11 @@
 fastapi
 uvicorn
 python-dotenv
-passlib[bcrypt]
+bcrypt
 python-jose[cryptography]
 pymongo
 groq
 httpx
 python-multipart
-pydantic[email]
+pydantic
 email-validator
