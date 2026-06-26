@@ -1,17 +1,17 @@
 from fastapi import HTTPException, status
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 from config.database import get_db
 from models.user import create_user_document, user_schema
 from utils.auth import hash_password, verify_password, create_access_token
 
 class RegisterRequest(BaseModel):
     name:     str
-    email:    EmailStr
+    email:    str        # ← changed from EmailStr to str
     password: str
     role:     str = "nurse"
 
 class LoginRequest(BaseModel):
-    email:    EmailStr
+    email:    str        # ← changed from EmailStr to str
     password: str
 
 def register_user(data: RegisterRequest):
@@ -29,12 +29,6 @@ def register_user(data: RegisterRequest):
             detail="Password must be at least 6 characters"
         )
 
-    if len(data.password.encode("utf-8")) > 72:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Password must be 72 bytes or fewer"
-        )
-
     if data.role not in ["doctor", "nurse", "admin"]:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -48,8 +42,8 @@ def register_user(data: RegisterRequest):
             detail="Email already registered"
         )
 
-    hashed  = hash_password(data.password)
-    doc     = create_user_document(
+    hashed = hash_password(data.password)
+    doc    = create_user_document(
         data.name, data.email.lower(), hashed, data.role
     )
     result  = db["users"].insert_one(doc)
